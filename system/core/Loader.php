@@ -187,6 +187,7 @@ class CI_Loader {
 	 * @param	string	$object_name	An optional object name to assign to
 	 * @return	object
 	 */
+	#[\ReturnTypeWillChange]
 	public function library($library, $params = NULL, $object_name = NULL)
 	{
 		if (empty($library))

@@ -1,0 +1,14 @@
+NOTA FISCAL
+=======================
+Cliente: Junior
+Data da Venda: 02/08/2024
+Horário da Venda: 18:37:15
+Vendedor: Usuário
+-----------------------
+Itens Vendidos:
+Material: Prego
+Quantidade: 7
+Preço Total: R$ 0,35
+-----------------------
+Preço Total da Venda: R$ 0,35
+=======================
