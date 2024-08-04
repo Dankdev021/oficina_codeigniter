@@ -88,7 +88,7 @@
                         </div>
                         <div class="form-group">
                             <label for="valor_mao_obra">Valor da Mão de Obra</label>
-                            <input type="number" name="valor_mao_obra" class="form-control" id="valor_mao_obra" required>
+                            <input type="number" name="valor_mao_obra" class="form-control" id="valor_mao_obra" required oninput="updateTotalPrice()">
                         </div>
                         <div class="form-group">
                             <label for="material_select">Materiais</label>
@@ -116,6 +116,7 @@
 
     <script>
         let materiais = [];
+
         function addMaterial() {
             const materialSelect = document.getElementById('material_select');
             const materialQuantityInput = document.getElementById('material_quantity');
@@ -141,7 +142,7 @@
 
             updateTotalPrice();
             document.getElementById('materiais').value = JSON.stringify(materiais);
-            materialQuantityInput.value = '';  // Clear the quantity input
+            materialQuantityInput.value = '';
         }
 
         function updateTotalPrice() {
@@ -150,7 +151,10 @@
             const valorTotal = valorMaoObra + valorMateriais;
             document.getElementById('valor_total').value = valorTotal.toFixed(2);
         }
+
+        document.getElementById('valor_mao_obra').addEventListener('input', updateTotalPrice);
     </script>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

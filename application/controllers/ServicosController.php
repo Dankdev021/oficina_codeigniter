@@ -11,7 +11,6 @@ class ServicosController extends CI_Controller {
         $this->load->library('session');
         $this->load->helper('url');
         
-        // Verifica se o usuário está logado
         if (!$this->session->userdata('user_id')) {
             redirect('login');
         }
@@ -32,8 +31,18 @@ class ServicosController extends CI_Controller {
         $data_conclusao_estimada = $this->input->post('data_conclusao_estimada');
         $mecanico_id = $this->input->post('mecanico_id');
         $valor_mao_obra = $this->input->post('valor_mao_obra');
-        $valor_total = $this->input->post('valor_total');
-        $materiais = $this->input->post('materiais');
+        $materiais = json_decode($this->input->post('materiais'), true);
+
+        // Verifique se $materiais é um array
+        if (!is_array($materiais)) {
+            $materiais = [];
+        }
+
+        $valor_total_materiais = array_reduce($materiais, function($acc, $material) {
+            return $acc + $material['price'];
+        }, 0);
+
+        $valor_total = $valor_mao_obra + $valor_total_materiais;
 
         $data_servico = array(
             'cliente' => $cliente,
@@ -45,7 +54,7 @@ class ServicosController extends CI_Controller {
             'valor_total' => $valor_total
         );
 
-        $this->db->trans_start(); // Inicia uma transação
+        $this->db->trans_start();
 
         $this->db->insert('services', $data_servico);
         $servico_id = $this->db->insert_id();
@@ -60,7 +69,7 @@ class ServicosController extends CI_Controller {
             $this->db->insert('itens_servico', $data_item_servico);
         }
 
-        $this->db->trans_complete(); // Completa a transação
+        $this->db->trans_complete();
 
         if ($this->db->trans_status()) {
             redirect(base_url('index.php/ServicosController/index'));

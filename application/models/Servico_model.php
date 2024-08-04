@@ -25,9 +25,7 @@ class Servico_model extends CI_Model {
     }
 
     public function get_all_mecanicos() {
-        $this->db->where('tipo_usuario', 'mecanico');
-        $query = $this->db->get('users');
+        $query = $this->db->where('id IN (SELECT user_id FROM mecanicos)')->get('users');
         return $query->result();
     }
 }
-?>
