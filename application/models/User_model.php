@@ -8,6 +8,10 @@ class User_model extends CI_Model {
         $this->load->database();
     }
 
+    public function get_all_users() {
+        return $this->db->get('users')->result();
+    }
+
     public function get_user($nome, $role) {
         log_message('info', 'Buscando usuário no banco de dados: ' . $nome . ' com role: ' . $role);
         try {
@@ -19,6 +23,12 @@ class User_model extends CI_Model {
             log_message('error', 'Erro ao buscar usuário: ' . $e->getMessage());
             return null;
         }
+    }
+
+    public function get_user_by_id($user_id) {
+        $this->db->where('id', $user_id);
+        $query = $this->db->get('users');
+        return $query->row();
     }
 
     public function get_user_by_venda($venda_id) {

@@ -54,4 +54,4 @@ $route['login'] = 'LoginController/index';
 $route['login/authenticate'] = 'LoginController/authenticate';
 $route['logout'] = 'LoginController/logout';
 $route['dashboard'] = 'DashboardController/index';
-
+$route['logout'] = 'UsuariosController/logout';

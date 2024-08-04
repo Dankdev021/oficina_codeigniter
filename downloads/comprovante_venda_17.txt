@@ -1,0 +1,14 @@
+NOTA FISCAL
+=======================
+Cliente: José
+Data da Venda: 03/08/2024
+Horário da Venda: 18:31:39
+Vendedor: Usuário
+-----------------------
+Itens Vendidos:
+Material: Prego
+Quantidade: 4
+Preço Total: R$ 0,20
+-----------------------
+Preço Total da Venda: R$ 0,20
+=======================

@@ -71,10 +71,12 @@
         <a href="<?= base_url('index.php/DashboardController/index'); ?>"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
         <a href="<?= base_url('index.php/VendasController/index'); ?>"><i class="fa-solid fa-shopping-cart"></i><span>Vendas</span></a>
         <a href="<?= base_url('index.php/CatalogoController/index'); ?>"><i class="fa-solid fa-box"></i><span>Estoque</span></a>
-        <a href="<?= base_url('index.php/ClientesController/index'); ?>"><i class="fa-solid fa-users"></i><span>Clientes</span></a>
-        <a href="<?= base_url('index.php/OrcamentosController/index'); ?>"><i class="fa-solid fa-gear"></i></i><span>Serviços</span></a>
+        <?php if ($this->session->userdata('user_role') == 'admin'): ?>
+            <a href="<?= base_url('index.php/UsuariosController/index'); ?>"><i class="fa-solid fa-users"></i><span>Usuários</span></a>
+        <?php endif; ?>
+        <a href="<?= base_url('index.php/ServicosController/index'); ?>"><i class="fa-solid fa-gear"></i></i><span>Serviços</span></a>
         <a href="<?= base_url('index.php/RelatoriosController/index'); ?>"><i class="fa-solid fa-chart-bar"></i><span>Relatórios</span></a>
-        <a href="<?= base_url('index.php/UsuariosController/logout'); ?>"><i class="fa-solid fa-sign-out-alt"></i><span>Sair</span></a>
+        <a href="<?= base_url('index.php/LoginController/logout'); ?>"><i class="fa-solid fa-sign-out-alt"></i><span>Sair</span></a>
     </div>
 
     <div class="main-content content">

@@ -1,0 +1,14 @@
+NOTA FISCAL
+=======================
+Cliente: José
+Data da Venda: 03/08/2024
+Horário da Venda: 17:59:45
+Vendedor: Usuário
+-----------------------
+Itens Vendidos:
+Material: Parafuso
+Quantidade: 12
+Preço Total: R$ 1,20
+-----------------------
+Preço Total da Venda: R$ 1,20
+=======================

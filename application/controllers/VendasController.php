@@ -59,10 +59,12 @@ class VendasController extends CI_Controller {
         }
         $this->db->insert_batch('itens_venda', $itens_venda);
     
-        $this->db->trans_complete(); // Completa a transação
+        $this->db->trans_complete();
     
         if ($this->db->trans_status()) {
-            $this->generate_invoice($venda_id);
+            $file_path = $this->generate_invoice($venda_id);
+            // Redirecionar para a página de detalhes com o caminho do arquivo como parâmetro
+            redirect(base_url('index.php/VendasController/detalhes/' . $venda_id . '?file_path=' . urlencode($file_path)));
         } else {
             show_error('Erro ao criar a venda.');
         }
@@ -99,7 +101,7 @@ class VendasController extends CI_Controller {
 
         $file_path = $dir . '/comprovante_venda_' . $venda_id . '.txt';
         file_put_contents($file_path, $invoice);
-        force_download($file_path, NULL);
+        return $file_path;
     }
 
     public function detalhes($id) {

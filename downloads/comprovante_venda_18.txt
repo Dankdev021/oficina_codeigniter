@@ -1,0 +1,18 @@
+NOTA FISCAL
+=======================
+Cliente: Gilmar
+Data da Venda: 03/08/2024
+Horário da Venda: 18:36:51
+Vendedor: Usuário
+-----------------------
+Itens Vendidos:
+Material: Filtro de Óleo
+Quantidade: 1
+Preço Total: R$ 25,00
+-----------------------
+Material: Parafuso
+Quantidade: 5
+Preço Total: R$ 0,50
+-----------------------
+Preço Total da Venda: R$ 25,50
+=======================

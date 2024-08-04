@@ -38,46 +38,21 @@
         .pagination .page-item .page-link {
             color: #007bff;
         }
+        #vendaModal {
+            padding: 15px;
+        }
     </style>
 </head>
 <body>
     <div class="container mt-5">
         <div class="main-header">
-            <h1>Registrar Venda</h1>
-        </div>
-        <div class="form-container">
-            <form id="vendaForm" action="<?= base_url('index.php/VendasController/create'); ?>" method="post" onsubmit="return validateForm()">
-                <div class="form-group">
-                    <label for="cliente_nome">Nome do Cliente</label>
-                    <input type="text" name="cliente_nome" class="form-control" id="cliente_nome" required>
-                </div>
-                <div id="itensContainer">
-                    <div class="item-row">
-                        <select name="itens_venda[0][material_id]" class="form-control" required onchange="updatePrice(this)">
-                            <option value="" disabled selected>Selecione o Material</option>
-                            <?php foreach ($materiais as $material): ?>
-                            <option value="<?= $material->id; ?>" data-price="<?= $material->preco; ?>"><?= $material->nome; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <input type="number" name="itens_venda[0][quantidade]" class="form-control" placeholder="Quantidade" required onchange="updatePrice(this)" min="1">
-                        <input type="hidden" name="itens_venda[0][preco_total]" class="item-price">
-                        <button type="button" onclick="removeItem(this)">Remover</button>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-secondary" onclick="addItem()">Adicionar Item</button>
-                <div class="form-group mt-3">
-                    <label for="total_price">Preço Total</label>
-                    <input type="hidden" name="preco_total" id="total_price_input">
-                    <input type="text" id="total_price" class="form-control" readonly>
-                </div>
-                <div class="error-message" id="errorMessage">Por favor, verifique os itens. Quantidade e preço não podem ser zero.</div>
-                <button type="submit" class="btn btn-primary">Registrar Venda</button>
-            </form>
-        </div>
-        <div class="main-header">
             <h1>Vendas Realizadas</h1>
         </div>
-        <table class="table table-dark table-hover">
+        
+        <!-- Listagem de Vendas -->
+        <table class="table table-dark table-hover mt-5">
+            <button class="btn btn-primary mt-5" data-toggle="modal" data-target="#vendaModal">Registrar Venda</button>
+
             <thead>
                 <tr>
                     <th>Cliente</th>
@@ -115,11 +90,57 @@
             </ul>
         </nav>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="vendaModal" tabindex="-1" aria-labelledby="vendaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="vendaModalLabel">Registrar Venda</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="vendaForm" action="<?= base_url('index.php/VendasController/create'); ?>" method="post" onsubmit="return validateForm()">
+                        <div class="form-group">
+                            <label for="cliente_nome">Nome do Cliente</label>
+                            <input type="text" name="cliente_nome" class="form-control" id="cliente_nome" required>
+                        </div>
+                        <div id="itensContainer">
+                            <div class="item-row">
+                                <select name="itens_venda[0][material_id]" class="form-control" required onchange="updatePrice(this)">
+                                    <option value="" disabled selected>Selecione o Material</option>
+                                    <?php foreach ($materiais as $material): ?>
+                                    <option value="<?= $material->id; ?>" data-price="<?= $material->preco; ?>"><?= $material->nome; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <input type="number" name="itens_venda[0][quantidade]" class="form-control" placeholder="Quantidade" required onchange="updatePrice(this)" min="1">
+                                <input type="hidden" name="itens_venda[0][preco_total]" class="item-price">
+                                <button type="button" onclick="removeItem(this)">Remover</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="addItem()">Adicionar Item</button>
+                        <div class="form-group mt-3">
+                            <label for="total_price">Preço Total</label>
+                            <input type="hidden" name="preco_total" id="total_price_input">
+                            <input type="text" id="total_price" class="form-control" readonly>
+                        </div>
+                        <div class="error-message" id="errorMessage">Por favor, verifique os itens. Quantidade e preço não podem ser zero.</div>
+                        <button type="submit" class="btn btn-primary">Registrar Venda</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function(){
             // Adicionar funcionalidade de paginação
-            const rowsPerPage = 10;
+            const rowsPerPage = 8;
             const rows = $('#vendasTableBody tr');
             const rowsCount = rows.length;
             const pageCount = Math.ceil(rowsCount / rowsPerPage); // Calculate total number of pages

@@ -1,0 +1,14 @@
+NOTA FISCAL
+=======================
+Cliente: Pedro
+Data da Venda: 04/08/2024
+Horário da Venda: 11:23:16
+Vendedor: Usuário
+-----------------------
+Itens Vendidos:
+Material: Correia Dentada
+Quantidade: 1
+Preço Total: R$ 90,00
+-----------------------
+Preço Total da Venda: R$ 90,00
+=======================

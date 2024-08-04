@@ -43,6 +43,24 @@ class Venda_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+
+    public function get_vendas_by_vendedor($vendedor_id) {
+        $this->db->select('vendas.*, itens_venda.*, materials.nome as material_nome');
+        $this->db->from('vendas');
+        $this->db->join('itens_venda', 'vendas.id = itens_venda.venda_id');
+        $this->db->join('materials', 'itens_venda.material_id = materials.id');
+        $this->db->where('vendas.vendedor_id', $vendedor_id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_sales_data() {
+        $this->db->select('DATE(data_venda) as data_venda, SUM(preco_total) as preco_total');
+        $this->db->group_by('DATE(data_venda)');
+        $this->db->order_by('DATE(data_venda)', 'ASC');
+        $query = $this->db->get('vendas');
+        return $query->result_array();
+    }
     
 }
 ?>

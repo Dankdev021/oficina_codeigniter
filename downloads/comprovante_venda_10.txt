@@ -1,0 +1,14 @@
+NOTA FISCAL
+=======================
+Cliente: Junior
+Data da Venda: 03/08/2024
+Horário da Venda: 18:03:23
+Vendedor: Usuário
+-----------------------
+Itens Vendidos:
+Material: Filtro de Óleo
+Quantidade: 1
+Preço Total: R$ 25,00
+-----------------------
+Preço Total da Venda: R$ 25,00
+=======================

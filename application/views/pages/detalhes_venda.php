@@ -100,9 +100,18 @@
         </div>
 
         <a href="<?= base_url('index.php/VendasController'); ?>" class="btn btn-primary">Voltar</a>
-        <?php if (isset($comprovante) && $comprovante): ?>
-        <a href="<?= $comprovante; ?>" class="btn btn-success" download="comprovante_venda.txt">Baixar Comprovante</a>
-        <?php endif; ?>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const filePath = urlParams.get('file_path');
+            if (filePath) {
+                const link = document.createElement('a');
+                link.href = "<?= base_url('downloads/'); ?>" + filePath.split('/').pop();
+                link.download = filePath.split('/').pop();
+                link.click();
+            }
+        });
+    </script>
 </body>
 </html>

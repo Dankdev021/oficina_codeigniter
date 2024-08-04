@@ -1,0 +1,14 @@
+NOTA FISCAL
+=======================
+Cliente: Gilmar
+Data da Venda: 03/08/2024
+Horário da Venda: 18:17:25
+Vendedor: Usuário
+-----------------------
+Itens Vendidos:
+Material: Filtro de Ar
+Quantidade: 1
+Preço Total: R$ 30,00
+-----------------------
+Preço Total da Venda: R$ 30,00
+=======================

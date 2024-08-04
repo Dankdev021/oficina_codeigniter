@@ -1,0 +1,14 @@
+NOTA FISCAL
+=======================
+Cliente: Gilmar
+Data da Venda: 04/08/2024
+Horário da Venda: 11:43:16
+Vendedor: Usuário
+-----------------------
+Itens Vendidos:
+Material: Parafuso
+Quantidade: 6
+Preço Total: R$ 0,60
+-----------------------
+Preço Total da Venda: R$ 0,60
+=======================

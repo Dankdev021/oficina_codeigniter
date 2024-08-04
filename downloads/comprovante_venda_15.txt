@@ -1,0 +1,11 @@
+Comprovante de Venda
+=====================
+Cliente: Joao
+Data da Venda: 03/08/2024
+Horário da Venda: 18:29:55
+Vendedor: Usuário
+
+Itens Vendidos:
+- Filtro de Ar | Quantidade: 2 | Preço: R$ 60,00
+
+Preço Total: R$ 60,00
