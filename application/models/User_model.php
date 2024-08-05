@@ -9,7 +9,11 @@ class User_model extends CI_Model {
     }
 
     public function get_all_users() {
-        return $this->db->get('users')->result();
+        $this->db->select('users.*, (CASE WHEN mecanicos.id IS NOT NULL THEN 1 ELSE 0 END) AS is_mecanico');
+        $this->db->from('users');
+        $this->db->join('mecanicos', 'mecanicos.user_id = users.id', 'left');
+        $query = $this->db->get();
+        return $query->result();
     }
 
     public function get_user($nome, $role) {
@@ -38,5 +42,10 @@ class User_model extends CI_Model {
         $this->db->where('vendas.id', $venda_id);
         $query = $this->db->get();
         return $query->row();
+    }
+
+    public function delete_usuario($id) {
+        $this->db->where('id', $id);
+        return $this->db->delete('users');
     }
 }

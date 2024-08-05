@@ -66,7 +66,7 @@
                 <tr>
                     <td><?= $venda->cliente_nome; ?></td>
                     <td><?= 'R$ ' . number_format($venda->preco_total, 2, ',', '.'); ?></td>
-                    <td><?= $venda->data_venda; ?></td>
+                    <td><?= date('d/m/Y', strtotime($venda->data_venda)); ?></td>
                     <td>
                         <a href="<?= base_url('index.php/VendasController/detalhes/'.$venda->id); ?>" class="btn btn-info">Detalhes</a>
                     </td>

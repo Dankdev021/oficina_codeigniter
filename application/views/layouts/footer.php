@@ -35,7 +35,7 @@
 </head>
 <body>
     <div class="content">
-        <!-- Conteúdo principal da página -->
+
     </div>
     <footer class="footer">
         <div class="container">

@@ -54,6 +54,16 @@
 <body>
     <div class="container mt-5">
         <h1>Catálogo de Materiais</h1>
+        
+        <?php if ($this->session->flashdata('success')): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $this->session->flashdata('success'); ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <?php endif; ?>
+        
         <div class="top-bar">
             <div class="search-container">
                 <input type="text" id="searchInput" placeholder="Pesquisar material..." class="form-control">
@@ -61,30 +71,61 @@
             </div>
             <?php if ($this->session->userdata('user_role') == 'admin'): ?>
                 <div>
-                    <a href="<?= base_url('index.php/CatalogoController/adicionar_material'); ?>" id="adicionarMaterialBtn" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMaterialModal">
                         <i class="fa-solid fa-plus"></i> Adicionar Material
-                    </a>
+                    </button>
                 </div>
             <?php endif; ?>
         </div>
+
+        <h2>Materiais Ativos</h2>
         <table class="table table-striped mt-3">
             <thead>
                 <tr>
                     <th>Nome</th>
                     <th>Preço</th>
                     <th>Quantidade</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody id="materialTableBody">
-                <?php foreach ($materiais as $material): ?>
+                <?php foreach ($materiais_ativos as $material): ?>
                 <tr>
                     <td><?= $material->nome; ?></td>
                     <td><?= 'R$ ' . number_format($material->preco, 2, ',', '.'); ?></td>
                     <td><?= $material->quantidade; ?></td>
+                    <td>
+                        <a href="<?= base_url('index.php/CatalogoController/inactivate/'.$material->id); ?>" class="btn btn-warning">Inativar</a>
+                    </td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
+
+        <h2>Materiais Inativos</h2>
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="materialTableBodyInactive">
+                <?php foreach ($materiais_inativos as $material): ?>
+                <tr>
+                    <td><?= $material->nome; ?></td>
+                    <td><?= 'R$ ' . number_format($material->preco, 2, ',', '.'); ?></td>
+                    <td><?= $material->quantidade; ?></td>
+                    <td>
+                        <a href="<?= base_url('index.php/CatalogoController/activate/'.$material->id); ?>" class="btn btn-success">Ativar</a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        
         <nav>
             <ul class="pagination">
                 <li class="page-item disabled" id="prevPage">
@@ -92,7 +133,6 @@
                         <span aria-hidden="true"><i class="fa-solid fa-arrow-left"></i></span>
                     </a>
                 </li>
-                <!-- Dynamic pagination items will be added here by JavaScript -->
                 <li class="page-item" id="nextPage">
                     <a class="page-link" href="#" aria-label="Next" data-page="next">
                         <span aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
@@ -102,26 +142,53 @@
         </nav>
     </div>
 
+    <div class="modal fade" id="addMaterialModal" tabindex="-1" aria-labelledby="addMaterialModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMaterialModalLabel">Adicionar Material</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="<?= base_url('index.php/CatalogoController/salvar_material'); ?>" method="post">
+                        <div class="form-group">
+                            <label for="nome">Nome do Material</label>
+                            <input type="text" name="nome" class="form-control" id="nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="preco">Preço</label>
+                            <input type="number" step="0.01" name="preco" class="form-control" id="preco" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantidade">Quantidade</label>
+                            <input type="number" name="quantidade" class="form-control" id="quantidade" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function(){
             const rowsPerPage = 10;
             const rows = $('#materialTableBody tr');
             const rowsCount = rows.length;
-            const pageCount = Math.ceil(rowsCount / rowsPerPage); // Calculate total number of pages
+            const pageCount = Math.ceil(rowsCount / rowsPerPage);
             const pagination = $('.pagination');
 
             let currentPage = 1;
 
-            // Create pagination links
             for (let i = 1; i <= pageCount; i++) {
                 $('<li class="page-item"><a class="page-link" href="#" data-page="' + i + '">' + i + '</a></li>').insertBefore('#nextPage');
             }
 
-            // Display first set of rows
             displayRows(currentPage);
 
-            // Add click event to pagination links
             $('.pagination').on('click', 'a', function(e) {
                 e.preventDefault();
                 const page = $(this).data('page');
@@ -147,23 +214,27 @@
                 rows.hide();
                 rows.slice(start, end).show();
                 
-                // Update pagination active state
                 $('.pagination .page-item').removeClass('active');
                 $('.pagination .page-item').eq(page).addClass('active');
 
-                // Disable previous/next buttons at the limits
                 $('#prevPage').toggleClass('disabled', page === 1);
                 $('#nextPage').toggleClass('disabled', page === pageCount);
             }
 
-            // Search functionality
             $('#searchInput').on('keyup', function(){
                 const value = $(this).val().toLowerCase();
                 $('#materialTableBody tr').filter(function(){
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
                 });
             });
+
+            setTimeout(function() {
+                $('.alert-success').fadeOut('slow');
+            }, 3000);
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

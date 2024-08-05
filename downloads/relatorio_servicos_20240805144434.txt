@@ -1,0 +1,9 @@
+Relatório de Serviços
+=====================
+Cliente: Pedro
+Descrição: vdq
+Valor da Mão de Obra: R$ 122.00
+Valor Total: R$ 192.00
+Data de Início: 2024-08-05
+Data de Conclusão Estimada: 2024-08-05
+---------------------

@@ -8,7 +8,8 @@ class Material_model extends CI_Model {
         $this->load->database();
     }
 
-    public function get_all_materials() {
+    public function get_all_materials($status = 'ativo') {
+        $this->db->where('status', $status);
         $query = $this->db->get('materials');
         return $query->result();
     }
@@ -28,12 +29,23 @@ class Material_model extends CI_Model {
         $this->db->where('id', $material_id);
         $this->db->update('materials');
 
-        // Adiciona uma entrada na tabela entradas_estoque
         $data_entrada = array(
             'id' => $material_id,
             'quantidade' => $quantity
         );
         $this->db->insert('entradas_estoque', $data_entrada);
+    }
+
+    public function inactivate_material($id) {
+        $this->db->set('status', 'inativo');
+        $this->db->where('id', $id);
+        $this->db->update('materials');
+    }
+
+    public function activate_material($id) {
+        $this->db->set('status', 'ativo');
+        $this->db->where('id', $id);
+        $this->db->update('materials');
     }
 }
 ?>

@@ -38,3 +38,4 @@ class RelatoriosController extends CI_Controller {
         force_download($file_path, NULL);
     }
 }
+?>

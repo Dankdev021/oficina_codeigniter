@@ -11,8 +11,7 @@ class DashboardController extends CI_Controller {
         $this->load->model('Servico_model'); // Novo modelo para serviços
         $this->load->library('session');
         $this->load->helper('url');
-        
-        // Verifica se o usuário está logado
+
         if (!$this->session->userdata('user_id')) {
             redirect('login');
         }
@@ -26,11 +25,11 @@ class DashboardController extends CI_Controller {
             $data['materiais'] = $this->Material_model->get_all_materials();
             $data['vendas'] = $this->Venda_model->get_all_vendas();
             $data['servicos'] = $this->Servico_model->get_all_servicos();
-
-            // Dados para o gráfico de vendas
-            $sales_data = $this->Venda_model->get_sales_data();
-            $data['sales_chart_labels'] = array_column($sales_data, 'data_venda');
-            $data['sales_chart_data'] = array_column($sales_data, 'preco_total');
+            
+            // Calculando os valores totais
+            $data['valor_total_vendas'] = $this->Venda_model->get_total_sales_value();
+            $data['valor_total_servicos'] = $this->Servico_model->get_total_service_value();
+            $data['faturamento_total'] = $data['valor_total_vendas'] + $data['valor_total_servicos'];
         } else {
             $data['vendedor'] = $this->User_model->get_user_by_id($user_id);
             $data['vendas'] = $this->Venda_model->get_vendas_by_vendedor($user_id);
@@ -39,5 +38,26 @@ class DashboardController extends CI_Controller {
         $data['view'] = 'pages/dashboard';
         $this->load->view('layouts/main', $data);
     }
+
+    public function filter_data() {
+        $period = $this->input->post('period');
+    
+        if ($period == 'day') {
+            $start_date = date('Y-m-d 00:00:00');
+            $end_date = date('Y-m-d 23:59:59');
+        } elseif ($period == 'week') {
+            $start_date = date('Y-m-d 00:00:00', strtotime('-1 week'));
+            $end_date = date('Y-m-d 23:59:59');
+        } elseif ($period == 'month') {
+            $start_date = date('Y-m-01 00:00:00');
+            $end_date = date('Y-m-t 23:59:59');
+        }
+    
+        $sales_data = $this->Venda_model->get_vendas_by_period($start_date, $end_date);
+        $service_data = $this->Servico_model->get_servicos_by_period($start_date, $end_date);
+    
+        echo json_encode(['sales' => $sales_data, 'services' => $service_data]);
+    }
+    
 }
 ?>

@@ -6,7 +6,6 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .card {
             margin: 20px;
@@ -20,9 +19,19 @@
     <div class="container mt-5">
         <div class="main-header">
             <h1>Dashboard</h1>
+            <form id="filterForm">
+                <div class="form-group">
+                    <label for="period">Filtrar por período:</label>
+                    <select class="form-control" id="period" name="period">
+                        <option value="day">Dia</option>
+                        <option value="week">Semana</option>
+                        <option value="month">Mês</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </form>
         </div>
         <div class="row">
-            <!-- Card para Usuário Normal -->
             <?php if ($this->session->userdata('user_role') == 'usuario'): ?>
                 <div class="col-md-4">
                     <div class="card text-white bg-primary mb-3">
@@ -46,7 +55,7 @@
                                         <th>Data da Venda</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="salesTableBody">
                                     <?php foreach ($vendas as $venda): ?>
                                     <tr>
                                         <td><?= $venda->cliente_nome; ?></td>
@@ -61,30 +70,28 @@
                 </div>
             <?php endif; ?>
 
-            <!-- Card para Admin -->
             <?php if ($this->session->userdata('user_role') == 'admin'): ?>
-                <div class="col-md-6">
-                    <div class="card text-white bg-info mb-3">
-                        <div class="card-header">Materiais em Estoque</div>
+                <div class="col-md-4">
+                    <div class="card text-white bg-success mb-3">
+                        <div class="card-header">Valor Total das Vendas</div>
                         <div class="card-body">
-                            <table class="table table-dark table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Material</th>
-                                        <th>Quantidade</th>
-                                        <th>Preço</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($materiais as $material): ?>
-                                    <tr>
-                                        <td><?= $material->nome; ?></td>
-                                        <td><?= $material->quantidade; ?></td>
-                                        <td><?= 'R$ ' . number_format($material->preco, 2, ',', '.'); ?></td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                            <h5 class="card-title">R$ <?= number_format($valor_total_vendas, 2, ',', '.'); ?></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-white bg-warning mb-3">
+                        <div class="card-header">Valor Total dos Serviços</div>
+                        <div class="card-body">
+                            <h5 class="card-title">R$ <?= number_format($valor_total_servicos, 2, ',', '.'); ?></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-white bg-info mb-3">
+                        <div class="card-header">Faturamento Total</div>
+                        <div class="card-body">
+                            <h5 class="card-title">R$ <?= number_format($faturamento_total, 2, ',', '.'); ?></h5>
                         </div>
                     </div>
                 </div>
@@ -100,7 +107,7 @@
                                         <th>Data da Venda</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="salesTableBody">
                                     <?php foreach ($vendas as $venda): ?>
                                     <tr>
                                         <td><?= $venda->cliente_nome; ?></td>
@@ -123,28 +130,20 @@
                                         <th>Serviço</th>
                                         <th>Cliente</th>
                                         <th>Data</th>
-                                        <th>Status</th>
+                                        <th>Valor total</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="servicesTableBody">
                                     <?php foreach ($servicos as $servico): ?>
                                     <tr>
                                         <td><?= $servico->descricao; ?></td>
                                         <td><?= $servico->cliente; ?></td>
                                         <td><?= $servico->data_conclusao_estimada; ?></td>
-                                        <td><?= $servico->status; ?></td>
+                                        <td><?= 'R$ ' . number_format($servico->valor_total, 2, ',', '.'); ?></td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card text-white bg-danger mb-3">
-                        <div class="card-header">Gráfico de Vendas</div>
-                        <div class="card-body">
-                            <canvas id="salesChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -153,42 +152,41 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
-        $(document).ready(function() {
-            <?php if ($this->session->userdata('user_role') == 'admin'): ?>
-                var ctx = document.getElementById('salesChart').getContext('2d');
-                var salesChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: <?= json_encode($sales_chart_labels); ?>,
-                        datasets: [{
-                            label: 'Vendas',
-                            data: <?= json_encode($sales_chart_data); ?>,
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            borderWidth: 1,
-                            fill: false
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            x: {
-                                display: true,
-                                title: {
-                                    display: true,
-                                    text: 'Data'
-                                }
-                            },
-                            y: {
-                                display: true,
-                                title: {
-                                    display: true,
-                                    text: 'Valor'
-                                }
-                            }
-                        }
-                    }
+        $(document).ready(function(){
+            $('#filterForm').submit(function(e) {
+                e.preventDefault();
+                const period = $('#period').val();
+                $.post("<?= base_url('index.php/DashboardController/filter_data'); ?>", { period: period }, function(data) {
+                    const response = JSON.parse(data);
+                    updateTables(response.sales, response.services);
                 });
-            <?php endif; ?>
+            });
+
+            function updateTables(sales, services) {
+                $('#salesTableBody').empty();
+                $('#servicesTableBody').empty();
+
+                sales.forEach(function(sale) {
+                    $('#salesTableBody').append(`
+                        <tr>
+                            <td>${sale.cliente_nome}</td>
+                            <td>R$ ${parseFloat(sale.preco_total).toFixed(2).replace('.', ',')}</td>
+                            <td>${sale.data_venda}</td>
+                        </tr>
+                    `);
+                });
+
+                services.forEach(function(service) {
+                    $('#servicesTableBody').append(`
+                        <tr>
+                            <td>${service.descricao}</td>
+                            <td>${service.cliente}</td>
+                            <td>${service.data_conclusao_estimada}</td>
+                            <td>R$ ${parseFloat(service.valor_total).toFixed(2).replace('.', ',')}</td>
+                        </tr>
+                    `);
+                });
+            }
         });
     </script>
 </body>

@@ -9,20 +9,19 @@ class CatalogoController extends CI_Controller {
         $this->load->library('session');
         $this->load->helper('url');
         
-        // Verifica se o usuário está logado
         if (!$this->session->userdata('user_id')) {
             redirect('login');
         }
     }
 
     public function index() {
-        $data['materiais'] = $this->Material_model->get_all_materials();
+        $data['materiais_ativos'] = $this->Material_model->get_all_materials('ativo');
+        $data['materiais_inativos'] = $this->Material_model->get_all_materials('inativo');
         $data['view'] = 'pages/catalogo';
         $this->load->view('layouts/main', $data);
     }
 
     public function adicionar_material() {
-        // Apenas admin pode acessar esta função
         if ($this->session->userdata('user_role') != 'admin') {
             show_error('Você não tem permissão para acessar esta página.', 403, 'Acesso Proibido');
         }
@@ -31,7 +30,6 @@ class CatalogoController extends CI_Controller {
     }
 
     public function salvar_material() {
-        // Apenas admin pode acessar esta função
         if ($this->session->userdata('user_role') != 'admin') {
             show_error('Você não tem permissão para acessar esta página.', 403, 'Acesso Proibido');
         }
@@ -43,11 +41,11 @@ class CatalogoController extends CI_Controller {
         );
 
         $this->Material_model->add_material($data);
-        redirect('catalogo');
+        $this->session->set_flashdata('success', 'Material salvo com sucesso!');
+        redirect(base_url('index.php/CatalogoController/index'));
     }
 
     public function entrada_material() {
-        // Apenas admin pode acessar esta função
         if ($this->session->userdata('user_role') != 'admin') {
             show_error('Você não tem permissão para acessar esta página.', 403, 'Acesso Proibido');
         }
@@ -57,6 +55,26 @@ class CatalogoController extends CI_Controller {
 
         $this->Material_model->update_quantity($material_id, $quantidade);
         redirect('catalogo');
+    }
+
+    public function inactivate($id) {
+        if ($this->session->userdata('user_role') != 'admin') {
+            show_error('Você não tem permissão para acessar esta página.', 403, 'Acesso Proibido');
+        }
+
+        $this->Material_model->inactivate_material($id);
+        $this->session->set_flashdata('success', 'Material inativado com sucesso!');
+        redirect(base_url('index.php/CatalogoController/index'));
+    }
+
+    public function activate($id) {
+        if ($this->session->userdata('user_role') != 'admin') {
+            show_error('Você não tem permissão para acessar esta página.', 403, 'Acesso Proibido');
+        }
+
+        $this->Material_model->activate_material($id);
+        $this->session->set_flashdata('success', 'Material ativado com sucesso!');
+        redirect(base_url('index.php/CatalogoController/index'));
     }
 }
 ?>

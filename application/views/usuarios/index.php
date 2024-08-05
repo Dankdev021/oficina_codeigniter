@@ -6,12 +6,26 @@
     <title>Usuários</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        .form-group input[type="text"]#cpf {
+            width: calc(100% - 44px);
+        }
+        .form-group input[type="password"] {
+            width: calc(100% - 44px);
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-5">
         <div class="main-header">
             <h1>Usuários</h1>
         </div>
+        <?php if ($this->session->flashdata('success')): ?>
+            <div class="alert alert-success"><?= $this->session->flashdata('success'); ?></div>
+        <?php endif; ?>
+        <?php if ($this->session->flashdata('error')): ?>
+            <div class="alert alert-danger"><?= $this->session->flashdata('error'); ?></div>
+        <?php endif; ?>
         <button class="btn btn-primary" data-toggle="modal" data-target="#createUserModal">Adicionar Usuário</button>
 
         <table class="table table-dark table-hover mt-5">
@@ -21,6 +35,7 @@
                     <th>CPF</th>
                     <th>Email</th>
                     <th>Tipo</th>
+                    <th>É Mecânico?</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -31,9 +46,10 @@
                     <td><?= $usuario->cpf; ?></td>
                     <td><?= $usuario->email; ?></td>
                     <td><?= $usuario->tipo_usuario; ?></td>
+                    <td><?= $usuario->mecanico_id ? 'Sim' : 'Não'; ?></td>
                     <td>
                         <button class="btn btn-info" data-toggle="modal" data-target="#editUserModal<?= $usuario->id; ?>">Editar</button>
-                        <a href="<?= base_url('index.php/UsuariosController/delete/'.$usuario->id); ?>" class="btn btn-danger">Excluir</a>
+                        <a href="#" class="btn btn-danger" onclick="confirmDelete('<?= base_url('index.php/UsuariosController/delete/'.$usuario->id); ?>')">Excluir</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -59,7 +75,7 @@
                         </div>
                         <div class="form-group">
                             <label for="cpf">CPF</label>
-                            <input type="text" class="form-control" id="cpf" name="cpf" required>
+                            <input type="text" class="form-control" id="cpf" name="cpf" required maxlength="11">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -109,7 +125,7 @@
                         </div>
                         <div class="form-group">
                             <label for="cpf">CPF</label>
-                            <input type="text" class="form-control" id="cpf" name="cpf" value="<?= $usuario->cpf; ?>" required>
+                            <input type="text" class="form-control" id="cpf" name="cpf" value="<?= $usuario->cpf; ?>" required maxlength="11">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -125,8 +141,8 @@
                         <div class="form-group">
                             <label for="is_mecanico">É mecânico?</label>
                             <select class="form-control" id="is_mecanico" name="is_mecanico" required>
-                                <option value="1" <?= $this->db->where('user_id', $usuario->id)->get('mecanicos')->num_rows() > 0 ? 'selected' : ''; ?>>Sim</option>
-                                <option value="0" <?= $this->db->where('user_id', $usuario->id)->get('mecanicos')->num_rows() == 0 ? 'selected' : ''; ?>>Não</option>
+                                <option value="1" <?= $usuario->mecanico_id ? 'selected' : ''; ?>>Sim</option>
+                                <option value="0" <?= !$usuario->mecanico_id ? 'selected' : ''; ?>>Não</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Salvar</button>
@@ -137,8 +153,21 @@
     </div>
     <?php endforeach; ?>
 
+    <script>
+        function confirmDelete(url) {
+            if (confirm("Tem certeza que deseja excluir este usuário?")) {
+                window.location.href = url;
+            }
+        }
+
+        $(document).ready(function() {
+            $('#cpf').mask('000.000.000-00', {reverse: true});
+        });
+    </script>
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 </body>
 </html>

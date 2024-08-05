@@ -16,10 +16,17 @@ class VendasController extends CI_Controller {
             redirect('login');
         }
     }
-
     public function index() {
+        $user_role = $this->session->userdata('user_role');
+        $user_id = $this->session->userdata('user_id');
+
+        if ($user_role == 'admin') {
+            $data['vendas'] = $this->Venda_model->get_all_vendas();
+        } else {
+            $data['vendas'] = $this->Venda_model->get_vendas_by_usuario($user_id);
+        }
+        
         $data['materiais'] = $this->Material_model->get_all_materials();
-        $data['vendas'] = $this->Venda_model->get_all_vendas();
         $data['view'] = 'pages/vendas';
         $this->load->view('layouts/main', $data);
     }

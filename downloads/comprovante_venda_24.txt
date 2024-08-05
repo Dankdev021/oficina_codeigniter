@@ -1,9 +1,9 @@
 NOTA FISCAL
 =======================
-Cliente: Gilmar
-Data da Venda: 03/08/2024
-Horário da Venda: 18:17:25
-Vendedor: Usuário
+Cliente: Troca do filtro de Ar
+Data da Venda: 05/08/2024
+Horário da Venda: 14:35:41
+Vendedor: admin
 -----------------------
 Itens Vendidos:
 Material: Filtro de Ar

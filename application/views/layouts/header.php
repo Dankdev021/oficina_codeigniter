@@ -62,13 +62,6 @@
                         <span style="color: #FFD700;">Login</span>
                     </div>
                 </li>
-
-                <!-- <li class="nav-item">
-                    <div>
-                        <i class="fa-solid fa-circle-xmark fa-2x" id="iconlogout"></i>
-                        <span style="color: #FF0000;">Logout</span>
-                    </div>
-                </li> -->
             </ul>
         </div>
     </nav>

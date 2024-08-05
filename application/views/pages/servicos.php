@@ -6,6 +6,7 @@
     <title>Serviços</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
     <style>
         .table-container {
             margin-top: 20px;
@@ -118,47 +119,51 @@
         let materiais = [];
 
         function addMaterial() {
-        const materialSelect = document.getElementById('material_select');
-        const materialQuantityInput = document.getElementById('material_quantity');
-        const selectedMaterial = materialSelect.options[materialSelect.selectedIndex];
-        const materialId = selectedMaterial.value;
-        const materialName = selectedMaterial.text;
-        const materialPrice = parseFloat(selectedMaterial.getAttribute('data-preco'));
-        const materialQuantity = parseInt(materialQuantityInput.value);
+            const materialSelect = document.getElementById('material_select');
+            const materialQuantityInput = document.getElementById('material_quantity');
+            const selectedMaterial = materialSelect.options[materialSelect.selectedIndex];
+            const materialId = selectedMaterial.value;
+            const materialName = selectedMaterial.text;
+            const materialPrice = parseFloat(selectedMaterial.getAttribute('data-preco'));
+            const materialQuantity = parseInt(materialQuantityInput.value);
 
-        if (!materialId || isNaN(materialPrice) || isNaN(materialQuantity) || materialQuantity <= 0) {
-            alert('Por favor, selecione um material válido e insira uma quantidade válida.');
-            return;
+            if (!materialId || isNaN(materialPrice) || isNaN(materialQuantity) || materialQuantity <= 0) {
+                alert('Por favor, selecione um material válido e insira uma quantidade válida.');
+                return;
+            }
+
+            const materialTotal = materialPrice * materialQuantity;
+            materiais.push({ id: materialId, name: materialName, quantity: materialQuantity, price: materialTotal });
+
+            const materialList = document.getElementById('materialList');
+            const materialItem = document.createElement('div');
+            materialItem.classList.add('material-item');
+            materialItem.innerHTML = `<p>${materialName} - Quantidade: ${materialQuantity} - Preço Total: R$ ${materialTotal.toFixed(2)}</p>`;
+            materialList.appendChild(materialItem);
+
+            updateTotalPrice();
+            document.getElementById('materiais').value = JSON.stringify(materiais);
+            materialQuantityInput.value = '';  // Clear the quantity input
         }
 
-        const materialTotal = materialPrice * materialQuantity;
-        materiais.push({ id: materialId, name: materialName, quantity: materialQuantity, price: materialTotal });
-
-        const materialList = document.getElementById('materialList');
-        const materialItem = document.createElement('div');
-        materialItem.classList.add('material-item');
-        materialItem.innerHTML = `<p>${materialName} - Quantidade: ${materialQuantity} - Preço Total: R$ ${materialTotal.toFixed(2)}</p>`;
-        materialList.appendChild(materialItem);
-
-        updateTotalPrice();
-        document.getElementById('materiais').value = JSON.stringify(materiais);
-        materialQuantityInput.value = '';  // Clear the quantity input
-    }
-
-    function updateTotalPrice() {
-        const valorMaoObra = parseFloat(document.getElementById('valor_mao_obra').value) || 0;
-        const valorMateriais = materiais.reduce((acc, material) => acc + material.price, 0);
-        const valorTotal = valorMaoObra + valorMateriais;
-        document.getElementById('valor_total').value = valorTotal.toFixed(2);
-    }
-
-
-        document.getElementById('valor_mao_obra').addEventListener('input', updateTotalPrice);
+        function updateTotalPrice() {
+            const valorMaoObra = parseFloat(document.getElementById('valor_mao_obra').value) || 0;
+            const valorMateriais = materiais.reduce((acc, material) => acc + material.price, 0);
+            const valorTotal = valorMaoObra + valorMateriais;
+            document.getElementById('valor_total').value = valorTotal.toFixed(2);
+        }
     </script>
 
-
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable({
+                "order": [[ 4, "desc" ]]  // Ordenar pela quinta coluna (Data de Cadastro) em ordem decrescente
+            });
+        });
+    </script>
 </body>
 </html>

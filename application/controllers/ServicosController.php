@@ -33,7 +33,6 @@ class ServicosController extends CI_Controller {
         $valor_mao_obra = $this->input->post('valor_mao_obra');
         $materiais = json_decode($this->input->post('materiais'), true);
 
-        // Verifique se $materiais é um array
         if (!is_array($materiais)) {
             $materiais = [];
         }

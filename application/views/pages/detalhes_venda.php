@@ -25,7 +25,6 @@
             <h1>Detalhes da Venda</h1>
         </div>
 
-        <!-- Informações do Cliente e da Venda -->
         <div class="details-section">
             <h2>Informações da Venda</h2>
             <table class="table table-dark table-hover">

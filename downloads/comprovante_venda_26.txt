@@ -1,0 +1,14 @@
+NOTA FISCAL
+=======================
+Cliente: Pedro
+Data da Venda: 05/08/2024
+Horário da Venda: 14:44:09
+Vendedor: usuario
+-----------------------
+Itens Vendidos:
+Material: Disco de Freio
+Quantidade: 2
+Preço Total: R$ 240,00
+-----------------------
+Preço Total da Venda: R$ 240,00
+=======================
