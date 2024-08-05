@@ -1,0 +1,30 @@
+Relatório de Serviços
+=====================
+Cliente: Pedro
+Descrição: Troca de amortecedor
+Valor da Mão de Obra: R$ 100.00
+Valor Total: R$ 0.00
+Data de Início: 2024-08-04
+Data de Conclusão Estimada: 2024-08-04
+---------------------
+Cliente: Junior
+Descrição: Troca do filtro de combustível
+Valor da Mão de Obra: R$ 100.00
+Valor Total: R$ 100.00
+Data de Início: 2024-08-04
+Data de Conclusão Estimada: 2024-08-05
+---------------------
+Cliente: Pedro
+Descrição: teste
+Valor da Mão de Obra: R$ 60.00
+Valor Total: R$ 1660.00
+Data de Início: 2024-08-04
+Data de Conclusão Estimada: 2024-08-04
+---------------------
+Cliente: teste
+Descrição: te3ste
+Valor da Mão de Obra: R$ 100.00
+Valor Total: R$ 340.00
+Data de Início: 2024-08-04
+Data de Conclusão Estimada: 2024-08-04
+---------------------

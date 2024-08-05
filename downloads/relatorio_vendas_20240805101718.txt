@@ -1,0 +1,14 @@
+Relatório de Vendas
+=====================
+Cliente: Pedro
+Preço Total: R$ 90.00
+Data da Venda: 2024-08-04 11:22:51
+---------------------
+Cliente: Pedro
+Preço Total: R$ 90.00
+Data da Venda: 2024-08-04 11:23:16
+---------------------
+Cliente: Gilmar
+Preço Total: R$ 0.60
+Data da Venda: 2024-08-04 11:43:16
+---------------------
