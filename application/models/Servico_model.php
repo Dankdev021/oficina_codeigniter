@@ -28,4 +28,13 @@ class Servico_model extends CI_Model {
         $query = $this->db->where('id IN (SELECT user_id FROM mecanicos)')->get('users');
         return $query->result();
     }
+
+    public function get_servico_materiais($servico_id) {
+        $this->db->select('materials.nome, itens_servico.quantidade, itens_servico.preco_total');
+        $this->db->from('itens_servico');
+        $this->db->join('materials', 'itens_servico.material_id = materials.id');
+        $this->db->where('itens_servico.servico_id', $servico_id);
+        $query = $this->db->get();
+        return $query->result();
+    }
 }

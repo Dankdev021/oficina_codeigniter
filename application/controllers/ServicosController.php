@@ -77,5 +77,17 @@ class ServicosController extends CI_Controller {
             show_error('Erro ao criar o serviço.');
         }
     }
+
+    public function detalhes($id) {
+        $data['servico'] = $this->Servico_model->get_servico($id);
+        $data['mecanico'] = $this->Mecanico_model->get_mecanico($data['servico']->mecanico_id);
+        $data['materiais'] = $this->Servico_model->get_servico_materiais($id);
+        if (empty($data['servico'])) {
+            show_error('Serviço não encontrado');
+        } else {
+            $data['view'] = 'pages/detalhes_servico';
+            $this->load->view('layouts/main', $data);
+        }
+    }
 }
 ?>

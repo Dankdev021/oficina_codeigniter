@@ -11,9 +11,10 @@
     <div class="container mt-5">
         <div class="main-header">
             <h1>Usuários</h1>
-            <button class="btn btn-primary" data-toggle="modal" data-target="#createUserModal">Adicionar Usuário</button>
         </div>
-        <table class="table table-dark table-hover mt-3">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#createUserModal">Adicionar Usuário</button>
+
+        <table class="table table-dark table-hover mt-5">
             <thead>
                 <tr>
                     <th>Nome</th>

@@ -64,9 +64,36 @@
         .content {
             margin-top: 70px;
         }
+        .spinner-overlay {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .spinner {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
+    <div id="loadingSpinner" class="spinner-overlay">
+        <div class="spinner"></div>
+    </div>
     <div class="sidebar">
         <a href="<?= base_url('index.php/DashboardController/index'); ?>"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
         <a href="<?= base_url('index.php/VendasController/index'); ?>"><i class="fa-solid fa-shopping-cart"></i><span>Vendas</span></a>
@@ -86,5 +113,20 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#loadingSpinner").show();
+
+            $(window).on('load', function() {
+                $("#loadingSpinner").fadeOut();
+            });
+
+            $(".sidebar a").on('click', function(e) {
+                e.preventDefault();
+                $("#loadingSpinner").show();
+                window.location.href = $(this).attr('href');
+            });
+        });
+    </script>
 </body>
 </html>

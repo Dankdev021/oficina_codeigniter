@@ -16,12 +16,12 @@
     <div class="container mt-5">
         <div class="main-header">
             <h1>Serviços</h1>
+        </div>
+        <div class="table-container">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#serviceModal">
                 Cadastrar Serviço
             </button>
-        </div>
-        <div class="table-container">
-            <table class="table table-dark table-hover">
+            <table class="table table-dark table-hover mt-5">
                 <thead>
                     <tr>
                         <th>Cliente</th>
@@ -118,39 +118,40 @@
         let materiais = [];
 
         function addMaterial() {
-            const materialSelect = document.getElementById('material_select');
-            const materialQuantityInput = document.getElementById('material_quantity');
-            const selectedMaterial = materialSelect.options[materialSelect.selectedIndex];
-            const materialId = selectedMaterial.value;
-            const materialName = selectedMaterial.text;
-            const materialPrice = parseFloat(selectedMaterial.getAttribute('data-preco'));
-            const materialQuantity = parseInt(materialQuantityInput.value);
+        const materialSelect = document.getElementById('material_select');
+        const materialQuantityInput = document.getElementById('material_quantity');
+        const selectedMaterial = materialSelect.options[materialSelect.selectedIndex];
+        const materialId = selectedMaterial.value;
+        const materialName = selectedMaterial.text;
+        const materialPrice = parseFloat(selectedMaterial.getAttribute('data-preco'));
+        const materialQuantity = parseInt(materialQuantityInput.value);
 
-            if (!materialId || isNaN(materialPrice) || isNaN(materialQuantity) || materialQuantity <= 0) {
-                alert('Por favor, selecione um material válido e insira uma quantidade válida.');
-                return;
-            }
-
-            const materialTotal = materialPrice * materialQuantity;
-            materiais.push({ id: materialId, name: materialName, quantity: materialQuantity, price: materialTotal });
-
-            const materialList = document.getElementById('materialList');
-            const materialItem = document.createElement('div');
-            materialItem.classList.add('material-item');
-            materialItem.innerHTML = `<p>${materialName} - Quantidade: ${materialQuantity} - Preço Total: R$ ${materialTotal.toFixed(2)}</p>`;
-            materialList.appendChild(materialItem);
-
-            updateTotalPrice();
-            document.getElementById('materiais').value = JSON.stringify(materiais);
-            materialQuantityInput.value = '';
+        if (!materialId || isNaN(materialPrice) || isNaN(materialQuantity) || materialQuantity <= 0) {
+            alert('Por favor, selecione um material válido e insira uma quantidade válida.');
+            return;
         }
 
-        function updateTotalPrice() {
-            const valorMaoObra = parseFloat(document.getElementById('valor_mao_obra').value) || 0;
-            const valorMateriais = materiais.reduce((acc, material) => acc + material.price, 0);
-            const valorTotal = valorMaoObra + valorMateriais;
-            document.getElementById('valor_total').value = valorTotal.toFixed(2);
-        }
+        const materialTotal = materialPrice * materialQuantity;
+        materiais.push({ id: materialId, name: materialName, quantity: materialQuantity, price: materialTotal });
+
+        const materialList = document.getElementById('materialList');
+        const materialItem = document.createElement('div');
+        materialItem.classList.add('material-item');
+        materialItem.innerHTML = `<p>${materialName} - Quantidade: ${materialQuantity} - Preço Total: R$ ${materialTotal.toFixed(2)}</p>`;
+        materialList.appendChild(materialItem);
+
+        updateTotalPrice();
+        document.getElementById('materiais').value = JSON.stringify(materiais);
+        materialQuantityInput.value = '';  // Clear the quantity input
+    }
+
+    function updateTotalPrice() {
+        const valorMaoObra = parseFloat(document.getElementById('valor_mao_obra').value) || 0;
+        const valorMateriais = materiais.reduce((acc, material) => acc + material.price, 0);
+        const valorTotal = valorMaoObra + valorMateriais;
+        document.getElementById('valor_total').value = valorTotal.toFixed(2);
+    }
+
 
         document.getElementById('valor_mao_obra').addEventListener('input', updateTotalPrice);
     </script>

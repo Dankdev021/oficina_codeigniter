@@ -130,8 +130,8 @@
                                     <?php foreach ($servicos as $servico): ?>
                                     <tr>
                                         <td><?= $servico->descricao; ?></td>
-                                        <td><?= $servico->cliente_nome; ?></td>
-                                        <td><?= $servico->data_servico; ?></td>
+                                        <td><?= $servico->cliente; ?></td>
+                                        <td><?= $servico->data_conclusao_estimada; ?></td>
                                         <td><?= $servico->status; ?></td>
                                     </tr>
                                     <?php endforeach; ?>
