@@ -116,3 +116,37 @@ CREATE TABLE `vendas` (
   KEY `vendedor_id` (`vendedor_id`),
   CONSTRAINT `vendas_ibfk_1` FOREIGN KEY (`vendedor_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+INSERT INTO materials (nome, preco, quantidade) VALUES
+('Parafuso', 0.10, 1000),
+('Prego', 0.05, 5000),
+('Porca', 0.20, 2000),
+('Amortecedor', 150.00, 50),
+('Filtro de Óleo', 25.00, 150),
+('Filtro de Ar', 30.00, 120),
+('Pastilha de Freio', 80.00, 200),
+('Disco de Freio', 120.00, 100),
+('Correia Dentada', 90.00, 75),
+('Velas de Ignição', 20.00, 300),
+('Bateria', 300.00, 20),
+('Radiador', 400.00, 15),
+('Macaco Hidráulico', 250.00, 10),
+('Chave de Roda', 40.00, 100),
+('Kit de Ferramentas', 150.00, 25),
+('Pneu', 400.00, 50),
+('Filtro de Combustível', 35.00, 140),
+('Correia Alternador', 70.00, 80),
+('Bucha de Suspensão', 15.00, 500),
+('Rolamento', 60.00, 200),
+('Terminal de Direção', 80.00, 150),
+('Sensor de Oxigênio', 120.00, 70),
+('Cabo de Velas', 50.00, 200),
+('Embreagem', 500.00, 20),
+('Cilindro Mestre', 200.00, 40),
+('Alinhamento de Direção', 100.00, 50),
+('Balanceamento de Rodas', 80.00, 60),
+('Lâmpada de Farol', 30.00, 300),
+('Retrovisor', 150.00, 40),
+('Pára-brisa', 600.00, 10);
