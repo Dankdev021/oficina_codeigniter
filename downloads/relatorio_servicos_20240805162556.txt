@@ -1,0 +1,16 @@
+Relatório de Serviços
+=====================
+Cliente: Pedro
+Descrição: vdq
+Valor da Mão de Obra: R$ 122.00
+Valor Total: R$ 192.00
+Data de Início: 2024-08-05
+Data de Conclusão Estimada: 2024-08-05
+---------------------
+Cliente: Pedro
+Descrição: Trocar o filtro do oleo
+Valor da Mão de Obra: R$ 35.00
+Valor Total: R$ 60.00
+Data de Início: 2024-08-05
+Data de Conclusão Estimada: 2024-08-06
+---------------------

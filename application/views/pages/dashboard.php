@@ -19,17 +19,6 @@
     <div class="container mt-5">
         <div class="main-header">
             <h1>Dashboard</h1>
-            <form id="filterForm">
-                <div class="form-group">
-                    <label for="period">Filtrar por período:</label>
-                    <select class="form-control" id="period" name="period">
-                        <option value="day">Dia</option>
-                        <option value="week">Semana</option>
-                        <option value="month">Mês</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Filtrar</button>
-            </form>
         </div>
         <div class="row">
             <?php if ($this->session->userdata('user_role') == 'usuario'): ?>
@@ -55,7 +44,7 @@
                                         <th>Data da Venda</th>
                                     </tr>
                                 </thead>
-                                <tbody id="salesTableBody">
+                                <tbody>
                                     <?php foreach ($vendas as $venda): ?>
                                     <tr>
                                         <td><?= $venda->cliente_nome; ?></td>
@@ -107,7 +96,7 @@
                                         <th>Data da Venda</th>
                                     </tr>
                                 </thead>
-                                <tbody id="salesTableBody">
+                                <tbody>
                                     <?php foreach ($vendas as $venda): ?>
                                     <tr>
                                         <td><?= $venda->cliente_nome; ?></td>
@@ -133,13 +122,13 @@
                                         <th>Valor total</th>
                                     </tr>
                                 </thead>
-                                <tbody id="servicesTableBody">
+                                <tbody>
                                     <?php foreach ($servicos as $servico): ?>
                                     <tr>
                                         <td><?= $servico->descricao; ?></td>
                                         <td><?= $servico->cliente; ?></td>
                                         <td><?= $servico->data_conclusao_estimada; ?></td>
-                                        <td><?= 'R$ ' . number_format($servico->valor_total, 2, ',', '.'); ?></td>
+                                        <td><?= $servico->valor_total; ?></td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -151,43 +140,5 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $('#filterForm').submit(function(e) {
-                e.preventDefault();
-                const period = $('#period').val();
-                $.post("<?= base_url('index.php/DashboardController/filter_data'); ?>", { period: period }, function(data) {
-                    const response = JSON.parse(data);
-                    updateTables(response.sales, response.services);
-                });
-            });
-
-            function updateTables(sales, services) {
-                $('#salesTableBody').empty();
-                $('#servicesTableBody').empty();
-
-                sales.forEach(function(sale) {
-                    $('#salesTableBody').append(`
-                        <tr>
-                            <td>${sale.cliente_nome}</td>
-                            <td>R$ ${parseFloat(sale.preco_total).toFixed(2).replace('.', ',')}</td>
-                            <td>${sale.data_venda}</td>
-                        </tr>
-                    `);
-                });
-
-                services.forEach(function(service) {
-                    $('#servicesTableBody').append(`
-                        <tr>
-                            <td>${service.descricao}</td>
-                            <td>${service.cliente}</td>
-                            <td>${service.data_conclusao_estimada}</td>
-                            <td>R$ ${parseFloat(service.valor_total).toFixed(2).replace('.', ',')}</td>
-                        </tr>
-                    `);
-                });
-            }
-        });
-    </script>
 </body>
 </html>

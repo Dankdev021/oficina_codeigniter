@@ -1,0 +1,18 @@
+NOTA FISCAL
+=======================
+Cliente: Joao
+Data da Venda: 05/08/2024
+Horário da Venda: 16:12:56
+Vendedor: admin
+-----------------------
+Itens Vendidos:
+Material: Amortecedor
+Quantidade: 2
+Preço Total: R$ 300,00
+-----------------------
+Material: Filtro de Óleo
+Quantidade: 1
+Preço Total: R$ 25,00
+-----------------------
+Preço Total da Venda: R$ 325,00
+=======================

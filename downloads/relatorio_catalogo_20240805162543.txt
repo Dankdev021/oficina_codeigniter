@@ -1,0 +1,130 @@
+Relatório de Catálogo
+=====================
+Material: Parafuso
+Quantidade: 996
+Preço: R$ 0.10
+---------------------
+Material: Prego
+Quantidade: 5000
+Preço: R$ 0.05
+---------------------
+Material: Porca
+Quantidade: 2000
+Preço: R$ 0.20
+---------------------
+Material: Amortecedor
+Quantidade: 46
+Preço: R$ 150.00
+---------------------
+Material: Filtro de Óleo
+Quantidade: 148
+Preço: R$ 25.00
+---------------------
+Material: Filtro de Ar
+Quantidade: 119
+Preço: R$ 30.00
+---------------------
+Material: Pastilha de Freio
+Quantidade: 200
+Preço: R$ 80.00
+---------------------
+Material: Disco de Freio
+Quantidade: 98
+Preço: R$ 120.00
+---------------------
+Material: Correia Dentada
+Quantidade: 75
+Preço: R$ 90.00
+---------------------
+Material: Velas de Ignição
+Quantidade: 300
+Preço: R$ 20.00
+---------------------
+Material: Bateria
+Quantidade: 20
+Preço: R$ 300.00
+---------------------
+Material: Radiador
+Quantidade: 15
+Preço: R$ 400.00
+---------------------
+Material: Macaco Hidráulico
+Quantidade: 10
+Preço: R$ 250.00
+---------------------
+Material: Chave de Roda
+Quantidade: 100
+Preço: R$ 40.00
+---------------------
+Material: Kit de Ferramentas
+Quantidade: 25
+Preço: R$ 150.00
+---------------------
+Material: Pneu
+Quantidade: 50
+Preço: R$ 400.00
+---------------------
+Material: Filtro de Combustível
+Quantidade: 140
+Preço: R$ 35.00
+---------------------
+Material: Correia Alternador
+Quantidade: 80
+Preço: R$ 70.00
+---------------------
+Material: Bucha de Suspensão
+Quantidade: 500
+Preço: R$ 15.00
+---------------------
+Material: Rolamento
+Quantidade: 200
+Preço: R$ 60.00
+---------------------
+Material: Terminal de Direção
+Quantidade: 150
+Preço: R$ 80.00
+---------------------
+Material: Sensor de Oxigênio
+Quantidade: 70
+Preço: R$ 120.00
+---------------------
+Material: Cabo de Velas
+Quantidade: 200
+Preço: R$ 50.00
+---------------------
+Material: Embreagem
+Quantidade: 20
+Preço: R$ 500.00
+---------------------
+Material: Cilindro Mestre
+Quantidade: 40
+Preço: R$ 200.00
+---------------------
+Material: Alinhamento de Direção
+Quantidade: 50
+Preço: R$ 100.00
+---------------------
+Material: Balanceamento de Rodas
+Quantidade: 60
+Preço: R$ 80.00
+---------------------
+Material: Lâmpada de Farol
+Quantidade: 300
+Preço: R$ 30.00
+---------------------
+Material: Retrovisor
+Quantidade: 40
+Preço: R$ 150.00
+---------------------
+Material: Pára-brisa
+Quantidade: 10
+Preço: R$ 600.00
+---------------------
+Material: teste
+Quantidade: 12
+Preço: R$ 122.00
+---------------------
+Material: Borracha
+Quantidade: 20
+Preço: R$ 40.00
+---------------------
